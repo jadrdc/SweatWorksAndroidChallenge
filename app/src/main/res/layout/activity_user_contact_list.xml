@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.screens.UserContactList">
+
+    <RelativeLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="false"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/square"
+        android:elevation="8dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <AutoCompleteTextView
+            android:id="@+id/searchBar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="40dp"
+            android:background="@android:color/transparent"
+            android:dropDownAnchor="@id/view"
+            android:dropDownHeight="300dp"
+            android:ellipsize="end"
+            android:hint="Buscar dirección"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="4dp"
+            android:scrollHorizontally="true"
+            android:textSize="12sp"
+            android:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:clickable="false"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_search_gray_24dp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/blue_light"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/searchLayout" />
+
+
+    <TextView
+        android:id="@+id/txtFavoriteUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="4dp"
+        android:text="Usuarios Favoritos"
+        android:textColor="@color/blueTheme"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcFavoriteUserList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/txtFavoriteUser"></androidx.recyclerview.widget.RecyclerView>
+
+
+    <TextView
+        android:id="@+id/txtUserList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Lista de Usuarios"
+        android:textColor="@color/blueTheme"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rcFavoriteUserList" />
+
+
+    <GridView
+        android:id="@+id/grdUserList"
+        android:layout_width="match_parent"
+        android:layout_height="430dp"
+        android:layout_margin="8dp"
+        android:horizontalSpacing="6dp"
+        android:numColumns="6"
+        android:scrollbars="horizontal"
+        android:verticalSpacing="6dp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtUserList" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginHorizontal="8dp"
+        android:contentDescription="Add Contact"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/grdUserList"
+        app:srcCompat="@drawable/ic_baseline_add_24" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

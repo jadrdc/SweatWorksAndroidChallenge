@@ -34,6 +34,17 @@ android {
         jvmTarget = '1.8'
     }
 }
+task wrapper(type: Wrapper){
+
+
+    }
+task prepareKotlinBuildScriptModel(type: Wrapper){
+
+
+}
+
+
+
 
 dependencies {
     def activity_version = "1.2.2"

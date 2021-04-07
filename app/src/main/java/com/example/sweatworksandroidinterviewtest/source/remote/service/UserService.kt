@@ -9,7 +9,7 @@ import retrofit2.http.Query
 interface UserService {
 
 
-    @GET("?results=50&inc=gender,name,email,phone,cell,picture,login")
+    @GET("?results=59&inc=gender,name,email,phone,cell,picture,login")
     fun getUsers(@Query("page") page: Int): Observable<UserResponse>
 
 }

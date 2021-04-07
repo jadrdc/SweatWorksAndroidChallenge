@@ -19,16 +19,27 @@ class UserInteractor(context: Context) {
     private var localRepository: FavoriteUserRepository = UserFavorityLocal(context)
 
     fun getUsers(page: Int): Observable<UserResponse>? {
-        return repository?.getUsers(page)
+        return repository.getUsers(page).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
     }
 
     fun getFavoriteUsers(): Single<List<UserFavorite>>? {
-        return localRepository?.getFavoriteUserList().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        return localRepository.getFavoriteUserList().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun deleteUser(userFavorite: UserFavorite): Completable {
+        return localRepository.deleteUser(userFavorite).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun getUser(name:String): Maybe<UserFavorite?> {
+        return localRepository.getUser(name).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
     }
 
     fun saveFavoriteUser(userFavorite: UserFavorite): Completable {
         return localRepository.saveUser(userFavorite).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
     }
 }

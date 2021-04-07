@@ -4,7 +4,6 @@ import android.content.Context
 import com.example.sweatworksandroidinterviewtest.model.entity.UserFavorite
 import com.example.sweatworksandroidinterviewtest.repository.interfaces.FavoriteUserRepository
 import com.example.sweatworksandroidinterviewtest.source.local.UserRoomDatabase
-import com.example.sweatworksandroidinterviewtest.source.local.dao.UserFavoriteDAO
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -17,7 +16,14 @@ class UserFavorityLocal(context: Context) : FavoriteUserRepository {
         return database.userFavoriteDao().getFavoriteUsers()
     }
 
-    override fun saveUser(user: UserFavorite):Completable {
-      return  database.userFavoriteDao().saveFavoriteUser(user)
+    override fun getUser(name: String): Maybe<UserFavorite?> {
+        return  database.userFavoriteDao().userExists(name)
+    }
+    override fun saveUser(user: UserFavorite): Completable {
+        return database.userFavoriteDao().saveFavoriteUser(user)
+    }
+
+    override fun deleteUser(user: UserFavorite): Completable {
+        return database.userFavoriteDao().deleteUser(user)
     }
 }
