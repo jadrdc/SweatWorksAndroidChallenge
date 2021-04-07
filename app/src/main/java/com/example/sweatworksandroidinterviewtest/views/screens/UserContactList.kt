@@ -9,10 +9,12 @@ import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.sweatworksandroidinterviewtest.R
+import com.example.sweatworksandroidinterviewtest.adapters.GridRecyclerAdapter
 import com.example.sweatworksandroidinterviewtest.adapters.SavedFavoriteUserAdapter
-import com.example.sweatworksandroidinterviewtest.adapters.UserGridAdapter
 import com.example.sweatworksandroidinterviewtest.model.entity.UserFavorite
 import com.example.sweatworksandroidinterviewtest.model.response.User
 import com.example.sweatworksandroidinterviewtest.viewmodels.UserViewModel
@@ -21,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_user_contact_list.*
 
 class UserContactList : AppCompatActivity(), SavedFavoriteUserAdapter.OnClickSavedFavoriteUser {
 
-    private var adapter: UserGridAdapter? = null
+    private var adapter: GridRecyclerAdapter? = null
     val model: UserViewModel by viewModels()
     var PAGEINDEX = 1
 
@@ -44,7 +46,7 @@ class UserContactList : AppCompatActivity(), SavedFavoriteUserAdapter.OnClickSav
         })
 
         searchBar.onItemClickListener = object : AdapterView.OnItemSelectedListener,
-                AdapterView.OnItemClickListener {
+            AdapterView.OnItemClickListener {
             override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 var name = searchBar.text.toString()
                 var user = adapter?.getUser(word = name)
@@ -76,6 +78,25 @@ class UserContactList : AppCompatActivity(), SavedFavoriteUserAdapter.OnClickSav
             }
         }
 
+        grdUserList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                var layoutManger = grdUserList.layoutManager as GridLayoutManager
+                layoutManger.let {
+                    var lastSeenElement = it.findLastVisibleItemPosition()
+
+                    if ((lastSeenElement + 1) == adapter!!.itemCount) {
+                        PAGEINDEX += 1
+                        model.getUserList(PAGEINDEX)
+                    }
+                }
+
+            }
+        })
+
+
         model.getUserList(PAGEINDEX)
     }
 
@@ -87,40 +108,51 @@ class UserContactList : AppCompatActivity(), SavedFavoriteUserAdapter.OnClickSav
     }
 
     private fun drawUserList(list: List<User>) {
-        adapter = UserGridAdapter(list = list.toMutableList(), context = this)
-        grdUserList.adapter = adapter
+
+        if (adapter == null) {
+            val layoutManager: GridLayoutManager? =
+                GridLayoutManager(this, 6)
+            adapter = GridRecyclerAdapter(list = list.toMutableList(), context = this)
+            grdUserList.layoutManager = layoutManager
+            grdUserList.adapter = adapter
+        } else {
+            adapter?.let { it.addAll(list.toMutableList()) }
+        }
+
     }
 
     private fun setSearchListAdapter(it: List<String>) {
         val adapter: ArrayAdapter<String> =
-                ArrayAdapter<String>(this, android.R.layout.select_dialog_item, it)
+            ArrayAdapter<String>(this, android.R.layout.select_dialog_item, it)
         searchBar.threshold = 2
         searchBar.setAdapter(adapter)
     }
 
 
     private fun drawSavedFavoriteList(favoriteList: List<UserFavorite>) {
-        txtFavoriteUser.visibility = View.VISIBLE
-        var adapter = SavedFavoriteUserAdapter(list = favoriteList.toMutableList(), listener = this)
-        rcFavoriteUserList.visibility = View.VISIBLE
-        val linearLayoutManager: LinearLayoutManager? =
+        if (favoriteList.isNotEmpty()) {
+            txtFavoriteUser.visibility = View.VISIBLE
+            var adapter =
+                SavedFavoriteUserAdapter(list = favoriteList.toMutableList(), listener = this)
+            rcFavoriteUserList.visibility = View.VISIBLE
+            val linearLayoutManager: LinearLayoutManager? =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rcFavoriteUserList?.layoutManager = linearLayoutManager
-        this.rcFavoriteUserList.adapter = adapter
-
+            rcFavoriteUserList?.layoutManager = linearLayoutManager
+            this.rcFavoriteUserList.adapter = adapter
+        }
     }
 
     override fun delete(user: UserFavorite) {
 
         MaterialAlertDialogBuilder(this)
-                .setTitle("Aviso")
-                .setMessage("Deseas eliminar este usuario de favoritos?")
-                .setPositiveButton("Si") { dialog, which ->
-                    model.deleteUser(user)
-                }.setNegativeButton("No") { dialog, which ->
-                    dialog.dismiss()
-                }
-                .show()
+            .setTitle("Aviso")
+            .setMessage("Deseas eliminar este usuario de favoritos?")
+            .setPositiveButton("Si") { dialog, which ->
+                model.deleteUser(user)
+            }.setNegativeButton("No") { dialog, which ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
 }
