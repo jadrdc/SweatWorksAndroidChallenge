@@ -70,7 +70,7 @@
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="8dp"
         android:text="Usuarios Favoritos"
-        android:textColor="@color/blueTheme"
+        android:textColor="@color/purpleTheme"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view" />
@@ -91,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="Lista de Usuarios"
-        android:textColor="@color/blueTheme"
+        android:textColor="@color/purpleTheme"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rcFavoriteUserList" />
@@ -114,6 +114,7 @@
         app:fabCustomSize="48dp"
         android:layout_margin="8dp"
         android:contentDescription="Add Contact"
+        app:backgroundTint="@color/purpleTheme"
         app:layout_constraintEnd_toEndOf="@id/grdUserList"
         app:layout_constraintTop_toBottomOf="@id/grdUserList"
         app:srcCompat="@drawable/ic_baseline_add_24" />

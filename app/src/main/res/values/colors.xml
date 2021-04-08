@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue_light">#90caf9</color>
     <color name="blueTheme">#03a9f4</color>
+    <color name="purpleTheme">#6200ee</color>
 </resources>
