@@ -1,5 +1,10 @@
 # SweatWorksAndroidChallenge
- 
+
+## Screens
+![Test Image 1](https://github.com/jadrdc/SweatWorksAndroidChallenge/blob/main/PANTALLA%201.PNG)
+![Test Image 1](https://github.com/jadrdc/SweatWorksAndroidChallenge/blob/main/PANTALLA%202.PNG)
+![Test Image 1](https://github.com/jadrdc/SweatWorksAndroidChallenge/blob/main/PANTALLA%203.PNG)
+
 ## Built With
 
 * [Gradle](https://gradle.org/) -  Build automation system.
