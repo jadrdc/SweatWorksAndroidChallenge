@@ -144,14 +144,14 @@ class UserContactList : AppCompatActivity(), SavedFavoriteUserAdapter.OnClickSav
 
     override fun delete(user: UserFavorite) {
 
-      var alert = MaterialAlertDialogBuilder(this)
+      MaterialAlertDialogBuilder(this)
             .setTitle("Aviso")
             .setMessage("Deseas eliminar este usuario de favoritos?")
             .setPositiveButton("Si") { dialog, which ->
                 model.deleteUser(user)
             }.setNegativeButton("No") { dialog, which ->
                 dialog.dismiss()
-            }
+            }.show()
 
           //  .show()
     }
